@@ -7,8 +7,8 @@ const getAllProducts = async (_req, res) => {
 
 const getProductById = async (req, res) => {
   const { id } = req.params;
-  const { data } = await productsServices.getProductById(id);
-  res.status(200).json(data);
+  const { status, data } = await productsServices.getProductById(id);
+  res.status(status === 'NOT_FOUND' ? 404 : 200).json(data);
 };
 
 module.exports = {
