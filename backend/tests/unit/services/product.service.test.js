@@ -37,4 +37,20 @@ describe('Testa o products.services', function () {
     expect(product).to.be.an('object');
     expect(product).to.deep.equal({ status: 'NOT_FOUND', data: { message: 'Product not found' } });
   });
+
+  it('Testa se o model create retorna o produto correto', async function () {
+    sinon.stub(models, 'create').resolves({
+      id: 4,
+      name: 'Produto Teste',
+    });
+
+    const product = await services.createProduct('Produto Teste');
+
+    expect(product).to.be.an('object');
+    expect(product).to.have.property('status');
+    expect(product).to.have.property('data');
+    expect(product.data).to.have.property('id');
+    expect(product.data).to.have.property('name');
+    expect(product.data.name).to.be.equal('Produto Teste');
+  });
 });

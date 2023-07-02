@@ -64,4 +64,20 @@ describe('Testa o product.controller', function () {
   
     expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
   });
+
+  it('Testa se o controller createProduct retorna um objeto com o status "SUCESSFUL" e o produto criado', async function () {
+    const req = { body: { name: 'Produto Teste' } };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+
+    sinon.stub(services, 'createProduct').resolves({ data: { id: 4, name: 'Produto Teste' }, status: 'SUCESSFUL' });
+
+    await controllers.createProduct(req, res);
+
+    expect(res.status).to.have.been.calledWith(201);
+
+    expect(res.json).to.have.been.calledWith({ id: 4, name: 'Produto Teste' });
+  });
 });

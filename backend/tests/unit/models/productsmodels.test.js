@@ -28,4 +28,19 @@ describe('Testa o products.model', function () {
     expect(product).to.be.an('object');
     expect(product).to.deep.equal(allProducts[1]);
   });
+
+  it('Testa se o model create retorna o produto correto', async function () {
+    sinon.stub(connection, 'execute').resolves([
+      {
+        insertId: 4,
+      },
+    ]);
+
+    const product = await models.create('Produto Teste');
+
+    expect(product).to.be.an('object');
+    expect(product).to.have.property('id');
+    expect(product).to.have.property('name');
+    expect(product.name).to.be.equal('Produto Teste');
+  });
 });
