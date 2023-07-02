@@ -1,12 +1,12 @@
-const { getAll, getById } = require('../models/sales.model');
+const models = require('../models/sales.model');
 
 const getAllSales = async () => {
-  const sales = await getAll();
+  const sales = await models.getAll();
   return { status: 'SUCESSFUL', data: sales };
 };
 
 const getSaleById = async (id) => {
-  const sale = await getById(id);
+  const sale = await models.getById(id);
   if (sale.length === 0) {
     return { status: 'NOT_FOUND', data: { message: 'Sale not found' } };
   }
