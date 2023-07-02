@@ -7,7 +7,7 @@ const getAllSales = async () => {
 
 const getSaleById = async (id) => {
   const sale = await getById(id);
-  if (!sale) {
+  if (sale.length === 0) {
     return { status: 'NOT_FOUND', data: { message: 'Sale not found' } };
   }
   return { status: 'SUCESSFUL', data: sale };

@@ -12,7 +12,7 @@ describe('Testa o products.services', function () {
     sinon.restore();
   });
 
-  it('Testa se o model getAll retorna um array', async function () {
+  it('Testa se o model getAll retorna um objeto', async function () {
     sinon.stub(models, 'getAll').resolves([allProducts]);
 
     const products = await services.getAllProducts();
