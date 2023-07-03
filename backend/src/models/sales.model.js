@@ -26,13 +26,34 @@ const getById = async (id) => {
     JOIN sales AS sls
     ON sprod.sale_id = sls.id
     WHERE sls.id = ?;
-`,
+    `,
     [id],
   );
   return sale;
 };
 
+const create = async (itemsSold) => {
+  const time = new Date();
+
+  const [newSale] = await connection.execute(
+`
+    INSERT INTO sales (date) VALUES (?);`,
+    [time],
+    );
+
+  const { insertId: id } = newSale;
+
+  await Promise.all(itemsSold.map((product) => connection.execute(
+    `
+    INSERT INTO sales_products (sale_id, product_id, quantity)
+    VALUES (?, ?, ?);`,
+    [id, product.productId, product.quantity],
+  )));
+  return { id, itemsSold };
+};
+
 module.exports = {
   getAll,
   getById,
+  create,
 };

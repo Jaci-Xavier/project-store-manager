@@ -11,7 +11,14 @@ const getSaleById = async (req, res) => {
   res.status(status === 'NOT_FOUND' ? 404 : 200).json(data);
 };
 
+const createSale = async (req, res) => {
+  const newSale = req.body;
+  const { status, data } = await salesService.createSale(newSale);
+  res.status(status === 'INVALID_DATA' ? 404 : 201).json(data);
+};
+
 module.exports = {
   getAllSales,
   getSaleById,
+  createSale,
 };
