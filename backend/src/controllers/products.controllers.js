@@ -14,7 +14,15 @@ const getProductById = async (req, res) => {
 const createProduct = async (req, res) => {
   const { name } = req.body;
   const { status, data } = await productsServices.createProduct(name);
-  res.status(status === 'INVALID_DATA' ? 422 : 201).json(data);
+
+  switch (status) {
+    case 'BAD_REQUEST':
+      return res.status(400).json(data);
+    case 'UNPROCESSABLE_ENTITY':
+      return res.status(422).json(data);
+    default:
+      return res.status(201).json(data);
+  }
 };
 
 module.exports = {

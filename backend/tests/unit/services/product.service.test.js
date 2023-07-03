@@ -53,4 +53,21 @@ describe('Testa o products.services', function () {
     expect(product.data).to.have.property('name');
     expect(product.data.name).to.be.equal('Produto Teste');
   });
+
+  it('Testa se o model create retorna um erro quando o nome do produto não é informado', async function () {
+    const product = await services.createProduct();
+
+    expect(product).to.be.an('object');
+    expect(product).to.deep.equal({ status: 'BAD_REQUEST', data: { message: '"name" is required' } });
+  });
+
+  it('Testa se o model create retorna um erro quando o nome do produto tem menos de 5 caracteres', async function () {
+    const product = await services.createProduct('Test');
+
+    expect(product).to.be.an('object');
+    expect(product).to.deep.equal({
+      status: 'UNPROCESSABLE_ENTITY',
+      data: { message: '"name" length must be at least 5 characters long' },
+    });
+  });
 });
