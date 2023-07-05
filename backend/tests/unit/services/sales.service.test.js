@@ -8,6 +8,8 @@ const services = require('../../../src/services/sales.services');
 
 const { allSales } = require('../mock/sales.mock');
 
+const { newSales } = require('../mock/newSales.mock');
+
 const { expect } = chai;
 chai.use(sinonChai);
 
@@ -37,5 +39,14 @@ describe('Testa o sales.services', function () {
 
     expect(sale).to.be.an('object');
     expect(sale).to.deep.equal({ status: 'NOT_FOUND', data: { message: 'Sale not found' } });
+  });
+
+  it('Testa se o model create retorna um objeto', async function () {
+    sinon.stub(models, 'create').resolves(newSales);
+
+    const sale = await services.createSale(newSales);
+
+    expect(sale).to.be.an('object');
+    expect(sale).to.deep.equal({ status: 'SUCESSFUL', data: newSales });
   });
 });

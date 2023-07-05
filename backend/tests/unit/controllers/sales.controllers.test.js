@@ -8,6 +8,8 @@ const services = require('../../../src/services/sales.services');
 
 const { allSales } = require('../mock/sales.mock');
 
+const { newSales } = require('../mock/newSales.mock');
+
 const { expect } = chai;
 
 chai.use(sinonChai);
@@ -63,5 +65,19 @@ describe('Testa o sales.controller', function () {
     expect(res.status).to.have.been.calledWith(404);
   
     expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
+  });
+
+  it('Testa se o controller createSale retorna um objeto com o status "SUCESSFUL" e o produto criado', async function () {
+    const req = { body: newSales };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+
+    sinon.stub(services, 'createSale').resolves({ data: newSales, status: 'SUCESSFUL' });
+
+    await controllers.createSale(req, res);
+
+    expect(res.status).to.have.been.calledWith(201);
   });
 });

@@ -6,13 +6,10 @@ const validateId = async (req, res, next) => {
   const allIds = allProducts.data.map((product) => product.id);
 
   const allReqIds = req.body.map((product) => product.productId);
-
-  console.log(allReqIds);
   
   const saleId = allReqIds.every((id) => allIds.includes(id));
   
   const validateRequired = allReqIds.some((id) => id === undefined);
-  // console.log(validateRequired);
 
   if (validateRequired) {
     return res.status(400).json({ message: '"productId" is required' });
@@ -24,17 +21,3 @@ const validateId = async (req, res, next) => {
 };
 
 module.exports = validateId;
-
-// const validateId = (req, res, next) => {
-//   const sale = req.body;
-
-//   for (let index = 0; index < sale.length; index += 1) {
-//     if (!sale[index].productId) {
-//       return res.status(400).json({ message: '"productId" is required' });
-//     }
-//   }
-
-//   next();
-// };
-
-// module.exports = validateId;
