@@ -24,15 +24,6 @@ describe('Testa o products.services', function () {
     expect(products).to.be.an('object');
   });
 
-  // it('Testa se o model getById retorna o produto correto', async function () {
-  //   sinon.stub(models, 'getById').resolves([[allProducts[1]]]);
-
-  //   const product = await services.getProductById(2);
-
-  //   expect(product).to.be.an('object');
-  //   expect(product).to.deep.equal({ status: 'SUCESSFUL', data: allProducts[1] });
-  // });
-
   it('testa se o o model getById retorna um errro quando não existir o produto com o id informado', async function () {
     sinon.stub(models, 'getById').resolves([]);
 
