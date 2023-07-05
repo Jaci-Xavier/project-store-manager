@@ -1,6 +1,6 @@
 const services = require('../services/products.services');
 
-const validateId = async (req, res, next) => {
+const allValidateId = async (req, res, next) => {
   const allProducts = await services.getAllProducts();
 
   const allIds = allProducts.data.map((product) => product.id);
@@ -20,4 +20,4 @@ const validateId = async (req, res, next) => {
   next();
 };
 
-module.exports = validateId;
+module.exports = allValidateId;
